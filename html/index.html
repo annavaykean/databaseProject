@@ -1,11 +1,18 @@
-<html>
+<html ng-app="dbApp" ng-controller="indexCtrl">
     <head>
-        <title>Welcome</title>
+        <title>Homepage</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+        <script src = "controllers/indexCtrl.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
     </head>
     <body>
-        <h1>College Event Database</h1>
-        <?php
-        echo "My first PHP script!";
-        ?>
+        <h1>DB project homepage</h1>
+        <input type="text" ng-model="name">
+        <br>
+        <h3>{{name}}</h3>
     </body>
 </html>
