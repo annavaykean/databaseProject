@@ -45,7 +45,7 @@
         <pre>Parsed: {{searchResults.data}}</pre>
         <pre>blah{{json | json}}</pre>
     </div>
-<!--     <div class="boxWithShadow" style="background-color:white;width:95%;margin:auto;border-radius:25px">
+<     <div class="boxWithShadow" style="background-color:white;width:95%;margin:auto;border-radius:25px">
 
             
         <div id="searchResults" >
@@ -83,8 +83,10 @@
             </md-input-container>
             <md-input-container>
                 <label>Description:</label>
-                <textarea type="text" ng-model="event.description">
+                <input type="text" ng-model="event.description">
             </md-input-container>
+            <br>
+            <md-button style="color:green" ng-click="createEvent()">Create</md-button>
 
         </form>
     </div>
@@ -110,6 +112,6 @@
                 </md-list>
         </form>
     </div>
-    </div> -->
+    </div> 
 </body>
 </html>

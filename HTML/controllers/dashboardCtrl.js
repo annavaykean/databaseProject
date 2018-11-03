@@ -72,6 +72,10 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
         //gather info and send to db
         $scope.createEventToggle = true;
         $scope.createRSOToggle = false;
+        if($scope.event.name != ''){
+            $scope.json = angular.toJson($scope.event);
+            $http.post('/createEvent', $scope.json);
+        }
     }
     $scope.createRSO = function(){
         //form with 5 users
