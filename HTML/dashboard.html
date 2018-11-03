@@ -41,21 +41,58 @@
         <md-button ng-click="search()">Enter</md-button>
     </md-input-container>
     <div>
-        <pre> Response: {{response}}</pre>
         <pre>Parsed: {{searchResults.data}}</pre>
-        <pre>blah{{json | json}}</pre>
     </div>
-<     <div class="boxWithShadow" style="background-color:white;width:95%;margin:auto;border-radius:25px">
+     <div class="boxWithShadow" style="background-color:white;width:95%;margin:auto;border-radius:25px">
+  
+        <div id="eventSearchResults"  ng-show="!createEventToggle && !createRSOToggle && showEventSearchResults">
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Location</th>
+                <th>Category</th>
+                <th>POC</th>
+                <th>Attend</th>
+                <th>View</th>
+            </tr>
+            <tr ng-repeat="n in searchResults.data">
+                <td>{{n.name}}</td>
+                <td>{{n.description}}</td>
+                <td>{{n.startTime}}</td>
+                <td>{{n.endTime}}</td>
+                <td>{{n.location}}</td>
+                <td>{{n.cat}}</td>
+                <td>{{n.userID}}</td>
+                <td><md-button ng-click="attendEvent(n)">Attend</md-button></td>
+                <td><md-button ng-click="viewEvent(n)">View</md-button></td>
+            </tr>
+        </table>
+    </div>
 
-            
-        <div id="searchResults"  ng-show="!createEventToggle && !createRSOToggle">
-        <md-list>
-            <md-list-item ng-repeat="x in searchResults">
-                <pre>{{ x.responseData | json }}</pre>
-            </md-list-item>
-        </md-list>
-    </div>
-    <div name="createEvent" ng-show="createEventToggle">
+    <div id="RSOSearchResults"  ng-show="!createEventToggle && !createRSOToggle && showRSOSearchResults">
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>University</th>
+                    <th>Admin</th>
+                    <th>Status</th>
+                    <th>Join</th>
+                </tr>
+                <tr ng-repeat="n in searchResults.data">
+                    <td>{{n.name}}</td>
+                    <td>{{n.universityID}}</td>
+                    <td>{{n.userID}}</td>
+                    <td>{{n.active}}</td>
+                    <td><md-button ng-click="joinRSO(n)">Join</md-button></td>
+                </tr>
+            </table>
+        </div>
+
+
+    <div id="createEvent" ng-show="createEventToggle">
         <form name="form.createEvent">
             <md-input-container>
                 <label>Name:</label>
@@ -109,6 +146,12 @@
             <md-button ng-click="createRSO()">Create</md-button>
         </form>
     </div>
+
+    <div id="viewEvent" ng-show="viewEventToggle">
+        <!-- show event data here-->
+        <!-- show event comments here-->
+    </div>
+
     </div> 
 </body>
 </html>

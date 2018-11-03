@@ -1,6 +1,9 @@
 angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($scope, $mdDialog, $http) {
     $scope.createEventToggle = false;
     $scope.createRSOToggle = false;
+    $scope.showEventSearchResults = false;
+    $scope.showRSOSearchResults = true;
+    $scope.viewEventToggle = false;
     //creating new event
     $scope.event = {};
     $scope.event.name = '';
@@ -48,6 +51,7 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
                 $scope.searchResults = angular.fromJson($scope.response);
                 console.log("Parsed response: ");
                 console.log($scope.searchResults);
+                $scope.showEventSearchResults = true;
             });        
             
         }
@@ -57,8 +61,15 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
             dataToSend.name = $scope.searchParam;
             dataToSend.cat = 1;
             $scope.json = angular.toJson(dataToSend);
-            var response = $http.post('/searchEvents', $scope.json)
-            console.log(response);
+            $http.post('/searchEvents', $scope.json).then(function(data){
+                $scope.response = data;
+                console.log("retrieved data: ");
+                console.log($scope.response);
+                $scope.searchResults = angular.fromJson($scope.response);
+                console.log("Parsed response: ");
+                console.log($scope.searchResults);
+                $scope.showEventSearchResults = true;
+            });
         }
         if($scope.searchCat == '2'){
             //rso event
@@ -66,8 +77,15 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
             dataToSend.name = $scope.searchParam;
             dataToSend.cat = 2;
             $scope.json = angular.toJson(dataToSend);
-            var response = $http.post('/searchEvents', $scope.json)
-            console.log(response);
+            $http.post('/searchEvents', $scope.json).then(function(data){
+                $scope.response = data;
+                console.log("retrieved data: ");
+                console.log($scope.response);
+                $scope.searchResults = angular.fromJson($scope.response);
+                console.log("Parsed response: ");
+                console.log($scope.searchResults);
+                $scope.showEventSearchResults = true;
+            });
         }
         if($scope.searchCat == '3'){
             //rso org
@@ -81,10 +99,29 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
                 $scope.searchResults = angular.fromJson($scope.response);
                 console.log("Parsed response: ");
                 console.log($scope.searchResults);
+                $scope.showRSOSearchResults = true;
             });
           
         }
     }
+    $scope.attendEvent = function(event){
+        console.log(event);
+        $scope.dataToSend = {};
+        $scope.dataToSend.name = event.name;
+        $scope.dataToSend.attendee; //code to get userID here
+    }
+    $scope.viewEvent = function(event){
+
+    }
+
+    $scope.joinRSO = function(rso){
+        console.log(rso);
+        $scope.dataToSend = {};
+        $scope.dataToSend.name = rso.name;
+        $scope.dataToSend.attendee; //code to get userID here
+        $scope.json = angular.toJson(dataToSend);
+    }
+
     $scope.createEvent = function(){
         //gather info and send to db
         $scope.createEventToggle = true;
