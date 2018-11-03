@@ -157,6 +157,40 @@ app.post('/createRSO', function(req,res){
 	});
 });
 
+// Search for events.
+app.post('/searchRSO', function(req,res){
+
+    // Create connection to database
+	db.getConnection(function(err, tempCont){
+			
+		// Error if connection is not established
+		if(err) {
+			res.status(400).send('Connection fail');
+				
+		} else { 
+			
+			
+			const sqlSearchEvent = 'SELECT * FROM RSO WHERE name = ?';
+			tempCont.query(sqlSearchEvent,[req.body.name], function(err, result) {
+					
+				// Check if query works
+				if (err) {
+					res.status(400).send('Query Fail');
+                } 
+                else {
+					res.status(200).send(result);		
+				}
+					
+				// End connection
+				tempCont.release();
+			
+			});
+				
+		}
+
+	});
+});
+
 
 
 
@@ -191,7 +225,9 @@ app.post('/test', function(req, res){
 							
 	        }
         });
-    }
+	}
+	
+	
 
     else{
         res.status(400).send('Invalid Values');
