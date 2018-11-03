@@ -16,6 +16,7 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
     $scope.foundingMembers = [];
     //searching
     $scope.searchResults = [];
+    $scope.response = '';
     $scope.searchParam = '';
     $scope.searchCat = '';
     $scope.userData = {};
@@ -34,9 +35,9 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
             dataToSend.name = $scope.searchParam;
             dataToSend.cat = 0;
             $scope.json = angular.toJson(dataToSend);
-            var response = $http.post('/searchEvents', $scope.json)
-            console.log(response);
-            $scope.searchResults = angular.fromJson(response);
+            $scope.response = $http.post('/searchEvents', $scope.json)
+            console.log($scope.response);
+            $scope.searchResults = angular.fromJson($scope.response);
         }
         if($scope.searchCat == '1'){
             //private event

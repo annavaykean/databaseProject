@@ -40,10 +40,12 @@
     <md-input-container>
         <md-button ng-click="search()">Enter</md-button>
     </md-input-container>
-    <div>
-        {{$scope.searchResults}}
-    </div>
-    <div class="boxWithShadow" layout="columns" style="background-color:white;width:50%;margin:auto;border-radius:25px">
+
+    <div class="boxWithShadow" style="background-color:white;width:95%;margin:auto;border-radius:25px">
+        <div>
+            <p>Response: {{$scope.response}}</p>
+            <p>Parsed: {{$scope.searchResults}}</p>
+        </div>
             <!-- ng-show="!createEventToggle && !createRSOToggle" -->
         <div id="searchResults" >
         <md-list>
