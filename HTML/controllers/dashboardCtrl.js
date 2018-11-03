@@ -35,12 +35,15 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
             dataToSend.name = $scope.searchParam;
             dataToSend.cat = 0;
             $scope.json = angular.toJson(dataToSend);
-            $scope.response = $http.post('/searchEvents', $scope.json);
-            console.log("Test");
-            console.log(angular.fromJson($scope.response));         
-            $scope.searchResults = angular.fromJson($scope.response);
-            console.log($scope.response);
-            console.log($scope.searchResults);
+            $http.post('/searchEvents', $scope.json).then(function(data){
+                $scope.response = data;
+                console.log("retrieved data: ");
+                console.log($scope.response);
+                $scope.searchResults = angular.fromJson($scope.response);
+                console.log("Parsed response: ");
+                console.log($scope.searchResults);
+            });        
+            
         }
         if($scope.searchCat == '1'){
             //private event
