@@ -13,6 +13,9 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
     //creating new RSO
     $scope.rso = {};
     $scope.rso.name = '';
+    $scope.rso.universityID = 1;
+    $scope.rso.active = 0;
+    $scope.rso.userID = 2;
     $scope.addMember = '';
     $scope.foundingMembers = [];
     //searching
@@ -30,6 +33,8 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
     }
     $scope.search = function(){
         //package for db
+        $scope.createEventToggle = false;
+        $scope.createRSOToggle = false;
         if($scope.searchCat == '0'){
             //public event
             var dataToSend = {};
@@ -82,6 +87,11 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
         //form with 5 users
         $scope.createRSOToggle = true;
         $scope.createEventToggle = false;
+        if($scope.rso.name != ''){
+            $scope.json = angular.toJson($scope.rso);
+            console.log($scope.json);
+            $http.post('/createRSO', $scope.json);
+        }
     }
     $scope.goto = function(key){
         if(key == 'search'){
