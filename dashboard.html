@@ -40,13 +40,13 @@
     <md-input-container>
         <md-button ng-click="search()">Enter</md-button>
     </md-input-container>
+    <div>
+        <pre>Response: {{$scope.response}}</pre>
+        <pre>Parsed: {{$scope.searchResults}}</pre>
+    </div>
+<!--     <div class="boxWithShadow" style="background-color:white;width:95%;margin:auto;border-radius:25px">
 
-    <div class="boxWithShadow" style="background-color:white;width:95%;margin:auto;border-radius:25px">
-        <div>
-            <pre>Response: {{$scope.response}}</pre>
-            <pre>Parsed: {{$scope.searchResults}}</pre>
-        </div>
-            <!-- ng-show="!createEventToggle && !createRSOToggle" -->
+            
         <div id="searchResults" >
         <md-list>
             <md-list-item ng-repeat="x in searchResults">
@@ -109,6 +109,6 @@
                 </md-list>
         </form>
     </div>
-    </div>
+    </div> -->
 </body>
 </html>

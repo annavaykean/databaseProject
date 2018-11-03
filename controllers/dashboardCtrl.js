@@ -35,7 +35,7 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
             dataToSend.name = $scope.searchParam;
             dataToSend.cat = 0;
             $scope.json = angular.toJson(dataToSend);
-            $scope.response = $http.post('/searchEvents', $scope.json)
+            $scope.response = $http.post('/searchEvents', $scope.json) + 'test';
             console.log($scope.response);
             $scope.searchResults = angular.fromJson($scope.response);
         }
