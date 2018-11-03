@@ -88,7 +88,7 @@ app.post('/searchEvents', function(req,res){
 });
 
 
-// Search for events.
+// Create Event.
 app.post('/createEvent', function(req,res){
 
     // Create connection to database
@@ -103,6 +103,41 @@ app.post('/createEvent', function(req,res){
 			
 			const sqlCreateEvent = 'INSERT INTO ALL_EVENTS (userID, cat, startTime, endTime, location, name, description) VALUES(';
 			tempCont.query(sqlCreateEvent + req.body.userID + "," + req.body.cat + ", '" + req.body.startTime + "', '" + req.body.endTime + "'," + req.body.location + ", '" + req.body.name + "', '" + req.body.description + "')", function(err, result) {
+					
+				// Check if query works
+				if (err) {
+					res.status(400).send('Query Fail');
+                } 
+                else {
+					res.status(200).send(result);		
+				}
+					
+				// End connection
+				tempCont.release();
+			
+			});
+				
+		}
+
+	});
+});
+
+
+// Create RSO.
+app.post('/createRSO', function(req,res){
+
+    // Create connection to database
+	db.getConnection(function(err, tempCont){
+			
+		// Error if connection is not established
+		if(err) {
+			res.status(400).send('Connection fail');
+				
+		} else { 
+			
+			
+			const sqlCreateEvent = 'INSERT INTO RSO (universityID, userID, name) VALUES(';
+			tempCont.query(sqlCreateEvent + req.body.universityID + "," + req.body.userID + ", '" + req.body.name + "')", function(err, result) {
 					
 				// Check if query works
 				if (err) {
