@@ -48,7 +48,7 @@
 <     <div class="boxWithShadow" style="background-color:white;width:95%;margin:auto;border-radius:25px">
 
             
-        <div id="searchResults" >
+        <div id="searchResults"  ng-show="!createEventToggle && !createRSOToggle">
         <md-list>
             <md-list-item ng-repeat="x in searchResults">
                 <pre>{{ x.responseData | json }}</pre>
@@ -101,19 +101,12 @@
                 <label>Name:</label>
                 <input type="text" ng-model="rso.name">
             </md-input-container>
-            <h6>You must enter 4 more members to create an RSO</h6>
             <md-input-container>
-                    <label>UserID:</label>
-                    <input type="text" ng-model="addMember">
-                </md-input-container>
-                <md-input-container>
-                    <md-button ng-click="rsoArrayPush()">Add</md-button>
-                </md-input-container>
-                <md-list>
-                    <md-list-item ng-repeat="x in foundingMembers"> 
-                        {{x}}
-                    </md-list-item>
-                </md-list>
+                <label>UniversityID</label>
+                <input type="text" ng-model="rso.uni">
+            </md-input-container>
+            <h6>You're RSO will be inactive until at least 4 more members have joined.</h6>
+            <md-button ng-click="createRSO()">Create</md-button>
         </form>
     </div>
     </div> 
