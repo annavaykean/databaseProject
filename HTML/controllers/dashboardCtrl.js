@@ -71,6 +71,17 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
         }
         if($scope.searchCat == '3'){
             //rso org
+            var dataToSend = {};
+            dataToSend.name = $scope.searchParam;
+            $scope.json = angular.toJson(dataToSend);
+            $http.post('/searchRSO', $scope.json).then(function(data){
+                $scope.response = data;
+                console.log("retrieved data: ");
+                console.log($scope.response);
+                $scope.searchResults = angular.fromJson($scope.response);
+                console.log("Parsed response: ");
+                console.log($scope.searchResults);
+            });
           
         }
     }
