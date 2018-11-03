@@ -43,14 +43,14 @@
 
     <div class="boxWithShadow" style="background-color:white;width:95%;margin:auto;border-radius:25px">
         <div>
-            <p>Response: {{$scope.response}}</p>
-            <p>Parsed: {{$scope.searchResults}}</p>
+            <pre>Response: {{$scope.response}}</pre>
+            <pre>Parsed: {{$scope.searchResults}}</pre>
         </div>
             <!-- ng-show="!createEventToggle && !createRSOToggle" -->
         <div id="searchResults" >
         <md-list>
             <md-list-item ng-repeat="x in searchResults">
-                {{x.name}}
+                <pre>{{ x.responseData | json }}</pre>
             </md-list-item>
         </md-list>
     </div>
