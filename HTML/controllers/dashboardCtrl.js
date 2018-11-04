@@ -175,7 +175,10 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
      $scope.signUpData = {};
      $scope.signUpData.email = '';
      $scope.signUpData.password = '';
-     $scope.signUpData.universityID = 0;
+     $scope.signUpData.universityID = 1;
+     $scope.signUpData.securityAns = '';
+     $scope.signUpData.isAdmin = 0;
+     $scope.signUpData.isSuperAdmin = 0;
      $scope.signUpToggle = false;
  
  
@@ -197,11 +200,12 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
          $scope.signUpToggle = true;
          if($scope.signUpData.uni != 0 && $scope.signUpData.email != '' && $scope.signUpData.password != ''){
              //submit new user to db here
-             console.log("creating new user account:");
-             console.log($scope.signUpData);
              $scope.json = angular.toJson($scope.signUpData);
-             console.log($scope.json);
-             window.location.href="signIn.html";
-         }
+             $http.post('/addUser', $scope.json).then(function(data){
+                $scope.userInfo = angular.fromJson(data);
+                window.location.href="dashboard.html"
+                console.log("login success");
+            });
      }
+    }
 });
