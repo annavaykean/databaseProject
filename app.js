@@ -110,14 +110,9 @@ app.post('/userLogin', function(req,res){
                 else {
 					if (result.length == 0){
 						res.status(400).send('No match')
-						console.log("No match");
-						console.log(result.length);
-						console.log(req.body.email);
-						console.log(req.body.password);
 					}
 					else{
 						res.status(200).send(result);
-						console.log("match");	
 					}
 							
 				}
@@ -222,6 +217,39 @@ app.post('/createEvent', function(req,res){
 	});
 });
 
+//Attend event
+app.post('/attendEvent', function(req,res){
+
+    // Create connection to database
+	db.getConnection(function(err, tempCont){
+			
+		// Error if connection is not established
+		if(err) {
+			res.status(400).send('Connection fail');
+				
+		} else { 
+			
+			
+			const sqlCreateEvent = 'INSERT INTO ATTENDING (userID, location, startTime, endTime) VALUES(';
+			tempCont.query(sqlCreateEvent + req.body.userID + "," + req.body.location + ", '" + req.body.startTime + "', '" + req.body.endTime + "')", function(err, result) {
+					
+				// Check if query works
+				if (err) {
+					res.status(400).send('Query Fail');
+                } 
+                else {
+					res.status(200).send(result);		
+				}
+					
+				// End connection
+				tempCont.release();
+			
+			});
+				
+		}
+
+	});
+});
 
 // Create RSO.
 app.post('/createRSO', function(req,res){
