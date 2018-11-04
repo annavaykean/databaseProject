@@ -121,6 +121,7 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
     $scope.attendEvent = function(event){
         console.log(event);
         $scope.dataToSend = {};
+        $scope.dataToSend.userID = $scope.userInfo.userID;
         $scope.dataToSend.startTime = event.startTime;
         $scope.dataToSend.endTime = event.endTime;
         $scope.dataToSend.location = event.location;
