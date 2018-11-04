@@ -144,8 +144,9 @@ app.post('/searchEvents', function(req,res){
 		} else { 
 			
 			
-			const sqlSearchEvent = 'SELECT * FROM ALL_EVENTS WHERE name = ? AND cat = ?';
-			tempCont.query(sqlSearchEvent,[req.body.name, req.body.cat], function(err, result) {
+			if(req.body.flag == 0){
+				const sqlSearchEvent = 'SELECT * FROM ALL_EVENTS WHERE name = ? AND cat = ?';
+				tempCont.query(sqlSearchEvent,[req.body.name, req.body.cat], function(err, result) {
 					
 				// Check if query works
 				if (err) {
@@ -158,7 +159,25 @@ app.post('/searchEvents', function(req,res){
 				// End connection
 				tempCont.release();
 			
-			});
+				});
+			}
+			else{
+				const sqlSearchEvent = 'SELECT * FROM ALL_EVENTS WHERE cat = ?';
+				tempCont.query(sqlSearchEvent,[eq.body.cat], function(err, result) {
+					
+				// Check if query works
+				if (err) {
+					res.status(400).send('Query Fail');
+                } 
+                else {
+					res.status(200).send(result);		
+				}
+					
+				// End connection
+				tempCont.release();
+			
+				});
+			}
 				
 		}
 
