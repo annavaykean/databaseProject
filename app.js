@@ -48,6 +48,10 @@ app.get('/home',function(req,res){
     res.sendFile(__dirname + '/html/dashboard.html');
 });
 
+app.get('/login',function(req,res){
+    res.sendFile(__dirname + '/html/signin.html');
+});
+
 //////////////////////////////////////////////////////////////////////
 
 
@@ -85,15 +89,14 @@ app.post('/addUser', function(req, res){
 });
 
 //User login
-app.get('/userLogin', function(req,res){
-
+app.post('/userLogin', function(req,res){
+	console.log("made it in");
     // Create connection to database
 	db.getConnection(function(err, tempCont){
 			
 		// Error if connection is not established
 		if(err) {
-			res.status(400).send('Connection fail');
-				
+			res.status(400).send('Connection fail');				
 		} 
 		
 		else { 			
@@ -131,7 +134,6 @@ app.get('/userLogin', function(req,res){
 
 // Search for events.
 app.post('/searchEvents', function(req,res){
-
     // Create connection to database
 	db.getConnection(function(err, tempCont){
 			
