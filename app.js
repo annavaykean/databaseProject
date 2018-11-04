@@ -90,7 +90,6 @@ app.post('/addUser', function(req, res){
 
 //User login
 app.post('/userLogin', function(req,res){
-	console.log("made it in");
     // Create connection to database
 	db.getConnection(function(err, tempCont){
 			
@@ -109,12 +108,16 @@ app.post('/userLogin', function(req,res){
 				}
 				 
                 else {
-					
 					if (result.length == 0){
 						res.status(400).send('No match')
+						console.log("No match");
+						console.log(result.length);
+						console.log(req.body.email);
+						console.log(req.body.password);
 					}
 					else{
-						res.status(200).send(result);	
+						res.status(200).send(result);
+						console.log("match");	
 					}
 							
 				}
@@ -163,7 +166,7 @@ app.post('/searchEvents', function(req,res){
 			}
 			else{
 				const sqlSearchEvent = 'SELECT * FROM ALL_EVENTS WHERE cat = ?';
-				tempCont.query(sqlSearchEvent,[eq.body.cat], function(err, result) {
+				tempCont.query(sqlSearchEvent,[req.body.cat], function(err, result) {
 					
 				// Check if query works
 				if (err) {
