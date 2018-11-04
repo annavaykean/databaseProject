@@ -1,15 +1,11 @@
 angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($scope, $mdDialog, $http) {
-    //user session data
-    $scope.userData = {};
-
-    //view control
     $scope.createEventToggle = false;
     $scope.createRSOToggle = false;
     $scope.showEventSearchResults = false;
-    $scope.showRSOSearchResults = false;
+    $scope.showRSOSearchResults = true;
     $scope.viewEventToggle = false;
-    $scope.signUpToggle = false;
-
+    //userInfo
+    $scope.userInfo;
     //creating new event
     $scope.event = {};
     $scope.event.name = '';
@@ -19,41 +15,23 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
     $scope.event.cat = 0;
     $scope.event.location = 0;
     $scope.event.userID = 0;
-
     //creating new RSO
     $scope.rso = {};
     $scope.rso.name = '';
     $scope.rso.universityID = 1;
     $scope.rso.active = 0;
     $scope.rso.userID = 2;
-
+    $scope.addMember = '';
+    $scope.foundingMembers = [];
     //searching
     $scope.searchResults = [];
     $scope.response = '';
     $scope.searchParam = '';
     $scope.searchCat = '';
+    $scope.userData = {};
+    $scope.userData.userID = '11223';
+    $scope.userData.admin = true;
 
-    //login data
-    $scope.userLoginData = {};
-    $scope.userLoginData.email = '';
-    $scope.userLoginData.password = '';
- 
-    //sign up data
-    $scope.universityList = [{name: 'UCF', code: '1'}, {name: 'Valencia', code: '2'}]; //to be replaced later when DB call works
-    $scope.securityQList = ["What is your favorite animal?",
-                             "What elementary school did you attend?",
-                             "What is your least favorite food?"
-                             ];
-    $scope.securityQSelected = '';
-    $scope.signUpData = {};
-    $scope.signUpData.email = '';
-    $scope.signUpData.password = '';
-    $scope.signUpData.universityID;
-    $scope.signUpData.securityAns = '';
-    $scope.signUpData.isAdmin = 0;
-    $scope.signUpData.isSuperAdmin = 0;
-
-    //functionality
     $scope.rsoArrayPush = function(){
         $scope.foundingMembers.push($scope.addMember);
         $scope.addMember = '';
@@ -66,12 +44,6 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
             //public event
             var dataToSend = {};
             dataToSend.name = $scope.searchParam;
-            if($scope.searchParam = ''){
-                dataToSend.flag = 0;
-            }
-            else{
-                dataToSend.flag = 1;
-            }
             dataToSend.cat = 0;
             $scope.json = angular.toJson(dataToSend);
             $http.post('/searchEvents', $scope.json).then(function(data){
@@ -90,12 +62,6 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
             var dataToSend = {};
             dataToSend.name = $scope.searchParam;
             dataToSend.cat = 1;
-            if($scope.searchParam = ''){
-                dataToSend.flag = 0;
-            }
-            else{
-                dataToSend.flag = 1;
-            }
             $scope.json = angular.toJson(dataToSend);
             $http.post('/searchEvents', $scope.json).then(function(data){
                 $scope.response = data;
@@ -112,12 +78,6 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
             var dataToSend = {};
             dataToSend.name = $scope.searchParam;
             dataToSend.cat = 2;
-            if($scope.searchParam = ''){
-                dataToSend.flag = 0;
-            }
-            else{
-                dataToSend.flag = 1;
-            }
             $scope.json = angular.toJson(dataToSend);
             $http.post('/searchEvents', $scope.json).then(function(data){
                 $scope.response = data;
@@ -133,12 +93,6 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
             //rso org
             var dataToSend = {};
             dataToSend.name = $scope.searchParam;
-            if($scope.searchParam = ''){
-                dataToSend.flag = 0;
-            }
-            else{
-                dataToSend.flag = 1;
-            }
             $scope.json = angular.toJson(dataToSend);
             $http.post('/searchRSO', $scope.json).then(function(data){
                 $scope.response = data;
@@ -156,15 +110,7 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
         console.log(event);
         $scope.dataToSend = {};
         $scope.dataToSend.name = event.name;
-        $scope.dataToSend.attendee = $scope.userData.userID; 
-        $http.post('/attendEvent', $scope.json).then(function(data){
-            $scope.userData = angular.fromJson(data);
-            alert("Successfully Attending Event!");
-        },
-        function(data){
-            //adding user to attending table failure
-            alert("Failed to Enroll");
-        });
+        $scope.dataToSend.attendee; //code to get userID here
     }
     $scope.viewEvent = function(event){
 
@@ -176,7 +122,6 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
         $scope.dataToSend.name = rso.name;
         $scope.dataToSend.attendee; //code to get userID here
         $scope.json = angular.toJson(dataToSend);
-
     }
 
     $scope.createEvent = function(){
@@ -198,20 +143,50 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
             $http.post('/createRSO', $scope.json);
         }
     }
-
+    $scope.goto = function(key){
+        if(key == 'search'){
+            window.location.href="searchEngine.html"
+        }
+        if(key == 'myEvents'){
+            window.location.href="myEvents.html"
+        }
+        if(key == 'myRSOs'){
+            window.location.href="myRSOs.html"
+        }
+    }
     $scope.logout = function(){
         //clear out user info 
         window.location.href="signIn.html"
-        $scope.userData = {};
     }
 
-
-    $scope.login = function(){
+    //login ctrl
+     //login data
+     $scope.userData = {};
+     $scope.userData.email = '';
+     $scope.userData.password = '';
+ 
+     //sign up data
+     $scope.universityList = [{name: 'UCF', code: '1'}, {name: 'Valencia', code: '2'}]; //to be replaced later when DB call works
+     $scope.securityQList = ["What is your favorite animal?",
+                             "What elementary school did you attend?",
+                             "What is your least favorite food?"
+                             ];
+     $scope.securityQSelected = '';
+     $scope.signUpData = {};
+     $scope.signUpData.email = '';
+     $scope.signUpData.password = '';
+     $scope.signUpData.universityID = 1;
+     $scope.signUpData.securityAns = '';
+     $scope.signUpData.isAdmin = 0;
+     $scope.signUpData.isSuperAdmin = 0;
+     $scope.signUpToggle = false;
+ 
+ 
+     $scope.login = function(){
          //send userData to database, if valid user, get permissions and go to next page
-         $scope.json = angular.toJson($scope.userLoginData);
-         console.log($scope.json);
+         $scope.json = angular.toJson($scope.userData);
          $http.post('/userLogin', $scope.json).then(function(data){
-            $scope.userData = angular.fromJson(data);
+            $scope.userInfo = angular.fromJson(data);
             window.location.href="dashboard.html"
             console.log("login success");
         },
@@ -220,8 +195,8 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
             console.log("login failed");
             alert("Incorrect Login");
         });
-    }
-    $scope.signUpFunc = function(){
+     }
+     $scope.signUpFunc = function(){
          $scope.signUpToggle = true;
          if($scope.signUpData.uni != 0 && $scope.signUpData.email != '' && $scope.signUpData.password != ''){
              //submit new user to db here
@@ -229,10 +204,8 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
              $http.post('/addUser', $scope.json).then(function(data){
                 $scope.userInfo = angular.fromJson(data);
                 window.location.href="dashboard.html"
-                console.log("sign up success");
-            }, function(data){
-                alert("Failed to create new account!");
+                console.log("login success");
             });
-        }
+     }
     }
 });
