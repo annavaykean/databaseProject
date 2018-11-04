@@ -1,4 +1,4 @@
-angular.module('dbApp', ['ngMaterial']).controller('signInCtrl', function($scope, $mdDialog) {
+angular.module('dbApp', ['ngMaterial', ]).controller('signInCtrl', function($scope, $mdDialog) {
     //login data
     $scope.userData = {};
     $scope.userData.username = '';

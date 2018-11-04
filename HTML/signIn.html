@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="dbApp" ng-controller="signInCtrl">
+<html ng-app="dbApp" ng-controller="DashboardCtrl">
 <head>
     <title>Sign In</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
@@ -11,7 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-messages.min.js"></script>
     <!--   <script src="assets/angular.min.js"></script>
    <script src="assets/angular-route.min.js"></script>  -->
-    <script src = "controllers/signInCtrl.js"></script>
+    <script src = "controllers/dashboardCtrl.js"></script>
 </head>
 <body class="loginPage">
 
@@ -27,14 +27,14 @@
                 <form name="loginForm">
                     <md-input-container>
                         <label>Email: </label>
-                        <input ng-model="email" type="email" required >
+                        <input ng-model="userData.email" type="email" required >
                     </md-input-container>
                 </div>
                 <br>
                 <div>
                     <md-input-container>
                         <label>Password:  </label>
-                        <input ng-model="password" type="password" required>
+                        <input ng-model="userData.password" type="password" required>
                     </md-input-container>
                 </div>
                 <md-button class="md-raised md-primary" ng-disabled="loginForm.$invalid" ng-click="login()" value="Log In">Sign In</md-button>

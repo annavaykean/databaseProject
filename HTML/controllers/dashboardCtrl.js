@@ -4,6 +4,8 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
     $scope.showEventSearchResults = false;
     $scope.showRSOSearchResults = true;
     $scope.viewEventToggle = false;
+    //userInfo
+    $scope.userInfo;
     //creating new event
     $scope.event = {};
     $scope.event.name = '';
@@ -156,4 +158,50 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
         //clear out user info 
         window.location.href="signIn.html"
     }
+
+    //login ctrl
+     //login data
+     $scope.userData = {};
+     $scope.userData.email = '';
+     $scope.userData.password = '';
+ 
+     //sign up data
+     $scope.universityList = [{name: 'UCF', code: '1'}, {name: 'Valencia', code: '2'}]; //to be replaced later when DB call works
+     $scope.securityQList = ["What is your favorite animal?",
+                             "What elementary school did you attend?",
+                             "What is your least favorite food?"
+                             ];
+     $scope.securityQSelected = '';
+     $scope.signUpData = {};
+     $scope.signUpData.email = '';
+     $scope.signUpData.password = '';
+     $scope.signUpData.universityID = 0;
+     $scope.signUpToggle = false;
+ 
+ 
+     $scope.login = function(){
+         //send userData to database, if valid user, get permissions and go to next page
+         $scope.json = angular.toJson($scope.userData);
+         $http.post('/userLogin', $scope.json).then(function(data){
+            $scope.userInfo = angular.fromJson(data);
+            window.location.href="dashboard.html"
+            console.log("login success");
+        },
+        function(data){
+            //incorrect user info
+            console.log("login failed");
+            alert("Incorrect Login");
+        });
+     }
+     $scope.signUpFunc = function(){
+         $scope.signUpToggle = true;
+         if($scope.signUpData.uni != 0 && $scope.signUpData.email != '' && $scope.signUpData.password != ''){
+             //submit new user to db here
+             console.log("creating new user account:");
+             console.log($scope.signUpData);
+             $scope.json = angular.toJson($scope.signUpData);
+             console.log($scope.json);
+             window.location.href="signIn.html";
+         }
+     }
 });
