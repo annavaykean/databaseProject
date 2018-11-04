@@ -4,8 +4,8 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
     $scope.showEventSearchResults = false;
     $scope.showRSOSearchResults = false;
     $scope.viewEventToggle = false;
-    //userInfo - holds user data from sign in
     $scope.userInfo;
+    $scope.signInAccurate = false;
     //creating new event
     $scope.event = {};
     $scope.event.name = '';
@@ -120,12 +120,16 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
 
     $scope.attendEvent = function(event){
         console.log(event);
-        console.log($scope.userInfo);
+        console.log(AppServ.userInfo);
         $scope.dataToSend = {};
         $scope.dataToSend.startTime = event.startTime;
+        $scope.dataToSend.startTime.replace('T', '');
+        $scope.dataToSend.startTime.replace('Z', '');
         $scope.dataToSend.endTime = event.endTime;
+        $scope.dataToSend.endTime.replace('T', '');
+        $scope.dataToSend.endTime.replace('Z', '');
         $scope.dataToSend.location = event.location;
-        $scope.dataToSend.userID = $scope.userInfo.userID; 
+        $scope.dataToSend.userID = $scope.userInfo.userID;
         $scope.json = angular.toJson($scope.dataToSend);
         $http.post('/attendEvent', $scope.json).then(function(data){
             alert("Successfully Attending Event!");
@@ -166,7 +170,8 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
     }
     $scope.logout = function(){
         //clear out user info 
-        window.location.href="signIn.html"
+       // window.location.href="signIn.html"
+       $scope.signInAccurate = false;
     }
 
     //login ctrl
@@ -196,8 +201,10 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
          //send userData to database, if valid user, get permissions and go to next page
          $scope.json = angular.toJson($scope.userData);
          $http.post('/userLogin', $scope.json).then(function(data){
-            $scope.userInfo = angular.fromJson(data);
-            window.location.href="dashboard.html"
+          //  $scope.userInfo = angular.fromJson(data);
+          $scope.userInfo = angular.fromJson(data);
+            //window.location.href="dashboard.html"
+            $scope.signInAccurate = true;
             console.log("login success");
         },
         function(data){
@@ -213,7 +220,8 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
              $scope.json = angular.toJson($scope.signUpData);
              $http.post('/addUser', $scope.json).then(function(data){
                 $scope.userInfo = angular.fromJson(data);
-                window.location.href="dashboard.html"
+               // window.location.href="dashboard.html"
+               $scope.signInAccurate = true;
                 console.log("login success");
             });
      }
