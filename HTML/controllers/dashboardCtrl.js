@@ -209,6 +209,7 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
     $scope.login = function(){
          //send userData to database, if valid user, get permissions and go to next page
          $scope.json = angular.toJson($scope.userLoginData);
+         console.log($scope.json);
          $http.post('/userLogin', $scope.json).then(function(data){
             $scope.userData = angular.fromJson(data);
             window.location.href="dashboard.html"
