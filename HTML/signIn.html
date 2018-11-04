@@ -27,14 +27,14 @@
                 <form name="loginForm">
                     <md-input-container>
                         <label>Email: </label>
-                        <input ng-model="userData.email" type="email" required >
+                        <input ng-model="userLoginData.email" type="email" required >
                     </md-input-container>
                 </div>
                 <br>
                 <div>
                     <md-input-container>
                         <label>Password:  </label>
-                        <input ng-model="userData.password" type="password" required>
+                        <input ng-model="userLoginData.password" type="password" required>
                     </md-input-container>
                 </div>
                 <md-button class="md-raised md-primary" ng-disabled="loginForm.$invalid" ng-click="login()" value="Log In">Sign In</md-button>
