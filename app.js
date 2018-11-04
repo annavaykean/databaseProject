@@ -53,6 +53,82 @@ app.get('/home',function(req,res){
 
 //Routes
 
+//Create user
+app.post('/addUser', function(req, res){
+    // Create connection to database
+	db.getConnection(function(err, tempCont){
+			
+		// Error if connection is not established
+		if(err) {
+			res.status(400).send('Connetion Fail');				
+		} 
+				
+		else {
+			// Add user to database
+			const sqlAddUser = "INSERT INTO STD_USER (password, email, universityID, securityAns) VALUES ('";
+			tempCont.query(sqlAddUser + req.body.password + "', '" + req.body.email + "', " + req.body.universityID + ", '" + req.body.securityAns + "')", function(err, result) {
+
+			// Check if query works
+			if(err) {
+				res.status(400).send('Query Fail');
+			}
+			else {
+				res.status(200).send('Query Success');	
+			}
+								
+			// End connection
+			tempCont.release();
+			});
+								
+		}
+    });
+});
+
+//User login
+app.get('/userLogin', function(req,res){
+
+    // Create connection to database
+	db.getConnection(function(err, tempCont){
+			
+		// Error if connection is not established
+		if(err) {
+			res.status(400).send('Connection fail');
+				
+		} 
+		
+		else { 			
+			const sql = 'SELECT userID, email, universityID FROM STD_USER WHERE email = ? AND password = ?';
+			tempCont.query(sql, [req.body.email, req.body.password], function(err, result) {
+					
+				// Check if query works
+				if (err) {
+					res.status(400).send('Query Fail');
+				}
+				 
+                else {
+					
+					if (result.length == 0){
+						res.status(400).send('No match')
+					}
+					else{
+						res.status(200).send(result);	
+					}
+							
+				}
+					
+				// End connection
+				tempCont.release();
+			
+			});
+				
+		}
+
+	});
+});
+
+
+
+
 // Search for events.
 app.post('/searchEvents', function(req,res){
 
@@ -157,7 +233,7 @@ app.post('/createRSO', function(req,res){
 	});
 });
 
-// Search for events.
+// Search for RSO.
 app.post('/searchRSO', function(req,res){
 
     // Create connection to database
@@ -170,8 +246,8 @@ app.post('/searchRSO', function(req,res){
 		} else { 
 			
 			
-			const sqlSearchEvent = 'SELECT * FROM RSO WHERE name = ?';
-			tempCont.query(sqlSearchEvent,[req.body.name], function(err, result) {
+			const sqlSearchRSO = 'SELECT * FROM RSO WHERE name = ?';
+			tempCont.query(sqlSearchRSO,[req.body.name], function(err, result) {
 					
 				// Check if query works
 				if (err) {
@@ -190,63 +266,6 @@ app.post('/searchRSO', function(req,res){
 
 	});
 });
-
-
-
-
-app.post('/test', function(req, res){
-    if(checkInput(req.body.email, "email") && checkInput(req.body.password, "password") && checkInput(req.body.answer, "answer")){
-        
-        // Create connection to database
-		db.getConnection(function(err, tempCont){
-			
-			// Error if connection is not established
-			if(err) {
-				res.status(400).send('Connetion Fail');				
-            } 
-            
-            else {
-                // Add user to database
-				const sqlAddUser = "INSERT INTO STD_USER (password, email, universityID, securityAns) VALUES ('";
-				tempCont.query(sqlAddUser + req.body.password + "', '" + req.body.email + "', " + req.body.universityID + ", '" + req.body.securityAns + "')", function(err, result) {
-
-                    // Check if query works
-					if(err) {
-						res.status(400).send('Query Fail');
-                    }
-                    else {
-						res.status(200).send('Query Success');	
-					}
-							
-					// End connection
-					tempCont.release();
-
-                });
-							
-	        }
-        });
-	}
-	
-	
-
-    else{
-        res.status(400).send('Invalid Values');
-        console.log(req.body.email);
-        console.log(req.body.password);
-        console.log(req.body.securityAns);
-
-    }
-});
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -341,37 +360,5 @@ var checkInput = function(input, type, callback) {
 
 
 
-// Test route to test DB query.
-app.get('/register', function(req,res){
 
-    // Create connection to database
-	db.getConnection(function(err, tempCont){
-			
-		// Error if connection is not established
-		if(err) {
-			res.status(400).send('Connection fail');
-				
-		} else { 
-			
-			// Delect contact from database, Might need a parseInt method if UserID and ContactId is parsed as a string
-			const sql = 'SELECT * FROM STD_USER';
-			tempCont.query(sql, function(err, result) {
-					
-				// Check if query works
-				if (err) {
-					res.status(400).send('Query Fail');
-                } 
-                else {
-					res.status(200).send(result);		
-				}
-					
-				// End connection
-				tempCont.release();
-			
-			});
-				
-		}
-
-	});
-});
 
