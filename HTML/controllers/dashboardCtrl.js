@@ -139,6 +139,7 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
             $http.post('/createEvent', $scope.json);
         }
     }
+}
     $scope.createRSO = function(){
         //form with 5 users
         $scope.createRSOToggle = true;
