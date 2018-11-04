@@ -4,7 +4,7 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
     $scope.showEventSearchResults = false;
     $scope.showRSOSearchResults = true;
     $scope.viewEventToggle = false;
-    //userInfo
+    //userInfo - holds user data from sign in
     $scope.userInfo;
     //creating new event
     $scope.event = {};
@@ -106,12 +106,6 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
           
         }
     }
-    $scope.attendEvent = function(event){
-        console.log(event);
-        $scope.dataToSend = {};
-        $scope.dataToSend.name = event.name;
-        $scope.dataToSend.attendee; //code to get userID here
-    }
     $scope.viewEvent = function(event){
 
     }
@@ -124,6 +118,18 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
         $scope.json = angular.toJson(dataToSend);
     }
 
+    $scope.attendEvent = function(event){
+        console.log(event);
+        $scope.dataToSend = {};
+        $scope.dataToSend.name = event.name;
+        $scope.dataToSend.attendee = $scope.userInfo.userID; 
+        $scope.json = angular.toJson($scope.dataToSend);
+        $http.post('/attendEvent', $scope.json).then(function(data){
+            alert("Successfully Attending Event!");
+        },
+        function(data){
+            alert("Failed to Enroll");
+        });
     $scope.createEvent = function(){
         //gather info and send to db
         $scope.createEventToggle = true;
