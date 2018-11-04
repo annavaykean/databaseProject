@@ -18,7 +18,7 @@
         </md-nav-bar>
     </div>
     <h1 style="color:white;text-align: center">Dashboard</h1>
-    <h5 style="text-align:right">UserID: {{userData.userID}}</h5>
+    <h5 style="text-align:right">UserID: {{userInfo.userID}}</h5>
     <div class="boxWithShadow" style="background-color:white;width:95%;margin:auto;border-radius:25px">
     <md-input-container>
         <md-button ng-if="userData.isAdmin == 1 || userData.isSuperAdmin == 1" ng-click="createEvent()">Create Event</md-button>
