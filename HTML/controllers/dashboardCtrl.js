@@ -2,7 +2,7 @@ angular.module('dbApp', ['ngMaterial']).controller('DashboardCtrl', function($sc
     $scope.createEventToggle = false;
     $scope.createRSOToggle = false;
     $scope.showEventSearchResults = false;
-    $scope.showRSOSearchResults = true;
+    $scope.showRSOSearchResults = false;
     $scope.viewEventToggle = false;
     //userInfo - holds user data from sign in
     $scope.userInfo;

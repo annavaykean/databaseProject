@@ -46,7 +46,9 @@
     <hr>
     <br>
      <div class="boxWithShadow" style="background-color:white;width:95%;margin:auto;border-radius:25px">
-  
+        <div id="default" ng-show="!createEventToggle && !createRSOToggle && !showEventSearchResults && !showRSOSearchResults && !viewEventToggle">
+            Welcome! Please select an option above.
+        </div>
         <div id="eventSearchResults"  ng-show="!createEventToggle && !createRSOToggle && showEventSearchResults">
         <table>
             <tr>
