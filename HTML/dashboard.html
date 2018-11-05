@@ -12,70 +12,6 @@
     <script src = "controllers/dashboardCtrl.js"></script>
 </head>
 <body class="dashboard">
-    <div id="signIn" ng-if="!signInAccurate">
-            <div layout="column" class="loginPage">
-                    <md-content layout-padding style="background-color:cadetblue;padding:90px 0" >
-                        <h1 ng-show="!signUpToggle" style="color:white;text-align: center">Please Sign In: </h1>
-                        <h1 ng-show="signUpToggle" style="color:white;text-align: center">Sign Up: </h1>
-            
-                        <div class="boxWithShadow" style="background-color:white;width:50%;margin:auto;border-radius:25px">
-                            <div ng-show="!signUpToggle">
-                            <div>
-                            <form name="loginForm">
-                                <md-input-container>
-                                    <label>Email: </label>
-                                    <input ng-model="userData.email" type="email" required >
-                                </md-input-container>
-                            </div>
-                            <br>
-                            <div>
-                                <md-input-container>
-                                    <label>Password:  </label>
-                                    <input ng-model="userData.password" type="password" required>
-                                </md-input-container>
-                            </div>
-                            <md-button class="md-raised md-primary" ng-disabled="loginForm.$invalid" ng-click="login()" value="Log In">Sign In</md-button>
-                            </form>
-                            <md-button class="md-raised md-primary" ng-click="signUpFunc()">Sign Up</md-button>
-                        </div>
-                        <div ng-show="signUpToggle">
-                            <form name="signUpForm">
-                                <md-input-container>
-                                    <label>Email:</label>
-                                    <input type="email" ng-model="signUpData.email" required>
-                                </md-input-container>
-                                <md-input-container>
-                                    <label>Password:</label>
-                                    <input type="password" ng-model="signUpData.password" required>
-                                </md-input-container>
-                                <br>
-                                <md-input-container>
-                                    <label>Choose a security question:</label>
-                                    <md-select ng-model="securityQSelected" required>
-                                        <md-option ng-value="s" ng-repeat="s in securityQList">{{s}}</md-option>
-                                    </md-select>
-                                </md-input-container>
-                                <br>
-                                <md-input-container>
-                                    <label>Security question response:</label>
-                                    <input type="text" ng-model="signUpData.securityAns" required>
-                                </md-input-container>
-                                <br>
-                                <md-input-container>
-                                    <label>School:</label>
-                                    <md-select ng-model="signUpData.universityID" required>
-                                        <md-option ng-value="x.code" ng-repeat="x in universityList">{{x.name}}</md-option>
-                                </md-input-container>
-                                <md-button class="md-raised md-primary" ng-disabled="signUpForm.$invalid" ng-click="signUpFunc()" value="Submit">Submit</md-button>
-                            </form>
-                        </div>
-                    </div>
-                    </md-content>
-            
-                </div>
-            
-    </div>
-    <div id="dashboard" ng-if="signInAccurate">
     <div>
         <md-nav-bar>
             <md-nav-item md-nav-click="logout()">Logout</md-nav-item>
@@ -220,7 +156,6 @@
         <!-- show event comments here-->
     </div>
 
-    </div> 
-</div>
+    </div>
 </body>
 </html>
